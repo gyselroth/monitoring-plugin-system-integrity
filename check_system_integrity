@@ -1,0 +1,40 @@
+#!/bin/bash
+
+exclude=
+while getopts "e:" arg
+do
+    case "$arg" in
+        e)
+             exclude=$OPTARG
+             ;;
+    esac
+done
+
+output=$((debsums -c) 2>&1)
+
+if [ "$exclude" != "" ]; then
+    output=$(echo "$output" | grep -v $exclude)
+fi
+
+if [ "$output" == "" ]; then
+    echo "system integrity is ok"
+    exit 0
+else 
+    no_sums=$(echo "$output" | grep "debsums: no" | wc -l)
+    no_file=$(echo "$output" | grep "debsums: missing file" | wc -l)
+    sum_failed=$(echo "$output" | grep -v "debsums:" | wc -l)
+fi
+
+if [ $sum_failed -gt  0 ]; then
+    echo "system integrity is critical, found $sum_failed files with inconsistency"
+    exit 2
+elif [ $no_file -gt 0 ]; then
+    echo "system integrity is warning, found $no_file inexisting files"
+    exit 1
+elif [ $no_sums -gt 0 ]; then
+    echo "system integrity unknown, found $no_sums files with no checksum available"
+    exit 3
+else
+    echo "system integrity is ok"
+    exit 0
+fi
