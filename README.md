@@ -12,6 +12,10 @@ out-of-date programms like chkrootkit or rkhunter with false-positive alerts.
 ### Usage
     -e <PATH> Excludes a given path (Recursive) from the check
 
+### Requirements
+
+* debsums
+
 ### Install 
 
 Copy check_system_integrity to your plugin folder and create a service/exec in your monitoring engine. 
