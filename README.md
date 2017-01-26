@@ -2,7 +2,7 @@
 
 ### Description
 
-This monitoring plugin makes use of debsums to verify the system integrity.
+This fairly simple monitoring plugin makes use of debsums to verify the system integrity.
 debsums scanns all installed files from deb packages and compares the checksums of the files with 
 the checksusms from the deb packages. 
 
