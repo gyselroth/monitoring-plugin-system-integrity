@@ -22,10 +22,15 @@ Copy check_system_integrity to your plugin folder and create a service/exec in y
 Keep in mind that this plugin needs a long time to execute. Its depends on the size of your system.
 In average you should execute this service check once a day with a timeout of 800s.
 
-Note that there are multiple timeouts in the (nrpe) monitoring eco system:
+Note that there are three different timeouts in the (nrpe/icinga2) monitoring eco system:
 (Of course you can execute this check using different ways, for example ssh or icinga2 itself)
 
-(Icina2) nrpe timeout
+
+Monitoring Checkcommand Timeout
+
+    timeout = 8m
+
+NRPE Plugin timeout
    
     vars.nrpe_timeout = 800
 
